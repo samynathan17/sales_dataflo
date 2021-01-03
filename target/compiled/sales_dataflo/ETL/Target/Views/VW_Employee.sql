@@ -1,0 +1,1 @@
+SELECT * FROM DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee

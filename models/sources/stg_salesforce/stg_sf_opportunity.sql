@@ -1,4 +1,4 @@
-{% if not var("enable_salesforce_source") %}
+/*{% if not var("enable_salesforce_source") %}
 {{
     config(
         enabled=false

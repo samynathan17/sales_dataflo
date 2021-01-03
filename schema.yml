@@ -1,0 +1,65 @@
+version: 2
+
+models:
+  - name: Dim_Account
+    columns:
+      - name: Account_ID
+        tests: 
+          - not_null
+          - unique
+
+  - name: Dim_Address
+    columns:
+      - name: Address_ID
+        tests: 
+          - not_null
+          - unique
+
+  - name: Dim_Employee
+    columns:
+      - name: employee_id
+        tests: 
+          - not_null
+          - unique
+
+  - name: Dim_Product
+    columns:
+      - name: Product_id
+        tests: 
+          - not_null
+          - unique
+
+  - name: Dim_Contact
+    columns:
+      - name: Contact_id
+        tests: 
+          - not_null
+          - unique
+
+  - name: Dim_Campaign
+    columns:
+      - name: Campaign_id
+        tests: 
+          - not_null
+          - unique
+
+  - name: Dim_opportunity_stage
+    columns:
+      - name: stage_id
+        tests: 
+          - not_null
+          - unique
+  
+  - name: Dim_opportunity
+    columns:
+      - name: opportunity_id
+        tests: 
+          - not_null
+          - unique
+
+  - name: Dim_lead
+    columns:
+     - name: lead_id
+       tests: 
+          - not_null
+          - unique

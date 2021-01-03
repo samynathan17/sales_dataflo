@@ -12,10 +12,10 @@ profile: 'sales_dataflo'
 # These configurations specify where dbt should look for different types of files.
 # The `source-paths` config, for example, states that models in this project can be
 # found in the "models/" directory. You probably won't need to change these!
-source-paths: ["models"]
+source-paths: ["ETL"]
 analysis-paths: ["analysis"]
 test-paths: ["tests"]
-data-paths: ["data"]
+data-paths: ["History_Data"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 
@@ -31,32 +31,25 @@ clean-targets:         # directories to be removed by `dbt clean`
 # as tables. These settings can be overridden in the individual model files
 # using the `{{ config(...) }}` macro.
 models:
-  sales_dataflo:
-# source adapter general settings
-      sources:
-          materialized: view
-          schema: staging
-# intermediate layer settings
-      intermediate:
-          materialized: view
-          schema: staging
-
-# warehouse layer settings
-      marts:
+  sales_dataflo :
+    Stage:
           materialized: table
-# util module settings
-      utils:
+          
+# views settings
+    Views:
+          materialized: view
+          
+    Tables:
           materialized: table
-          schema: logs
-
+                   
 # seeds (reference files, loaded into tables) module settings
 seeds:
-  FivetranDbt_Transformation:
+  sales_dataflo:
     schema: seed
           
 vars:
-  enable_salesforce_source : true
-
+  enable_SF_source : true
+  
   enable_crm_warehouse :                true
   enable_finance_warehouse :            false
   enable_projects_warehouse :           false
@@ -65,19 +58,6 @@ vars:
   enable_product_warehouse :            false
   enable_subscriptions_warehouse :      false
 
-
   # Salesforce Schema and Table info
-  salesforce_schema_name           : salesforce
-  salesforce_crm_etl_name          : fivetran 
-  salesforce_account_table_name    : account
-  salesforce_lead_table_name       : lead
-  salesforce_opportunity_table_name: opportunity
-  salesforce_user_table_name       : user
-  salesforce_user_role_table_name  : user_role
-  salesforce_contact_table_name    : contact
-  salesforce_case_table_name       : case
-
-  
-
-
-
+  V_SF_Schema              : DBT_TEST_LIVEDATA_RK
+  V_SF_CRM_ETL             : FIVETRAN_SF 
