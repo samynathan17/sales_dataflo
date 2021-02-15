@@ -41,6 +41,10 @@ models:
           
     Tables:
           materialized: table
+
+    ml_insights_data:
+          materialized: table
+          schema: ml_insights_data
                    
 # seeds (reference files, loaded into tables) module settings
 seeds:
@@ -59,5 +63,7 @@ vars:
   enable_subscriptions_warehouse :      false
 
   # Salesforce Schema and Table info
-  V_SF_Schema              : DBT_TEST_LIVEDATA_RK
+  V_Schema                 : DBT_SALESDATAFLO
   V_SF_CRM_ETL             : FIVETRAN_SF 
+  V_DB                     : DATAFLOTEST_DATABASE
+  

@@ -1,1 +1,0 @@
- {{(run_metrics_history('1 = 1', '27', '5','Dim_Account'))}}

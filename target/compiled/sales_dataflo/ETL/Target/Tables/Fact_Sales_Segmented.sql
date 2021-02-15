@@ -160,7 +160,7 @@ Metrics_Calc AS(
         Source.DW_INS_UPD_DTS
     from Source 
         join timeframe 
-        on Report_Dt between timeframe.DAY_START and timeframe.DAY_END
+        on Report_Dt between timeframe.DAY_START and timeframe.DAY_END and Source.entity_code = timeframe.source_type
         join date_range
         on TimeFrameID = date_range.date_day
     group by
@@ -189,7 +189,7 @@ Metrics_Calc AS(
     from Source 
         join timeframe 
         on Report_Dt between timeframe.WEEK_START and timeframe.WEEK_END
-        and Report_Dt <= TimeFrameID
+        and Report_Dt <= TimeFrameID and Source.entity_code = timeframe.source_type
         join date_range
         on TimeFrameID = date_range.date_day        
     group by
@@ -218,7 +218,7 @@ Metrics_Calc AS(
     from Source 
         join timeframe 
         on Report_Dt between timeframe.MONTH_START and timeframe.MONTH_END
-        and Report_Dt <= TimeFrameID
+        and Report_Dt <= TimeFrameID and Source.entity_code = timeframe.source_type
         join date_range
         on TimeFrameID = date_range.date_day        
     group by
@@ -247,7 +247,7 @@ Metrics_Calc AS(
     from Source 
         join timeframe 
         on Report_Dt between timeframe.QUARTER_START and timeframe.QUARTER_END
-        and Report_Dt <= TimeFrameID
+        and Report_Dt <= TimeFrameID and Source.entity_code = timeframe.source_type
         join date_range
         on TimeFrameID = date_range.date_day        
     group by
@@ -276,7 +276,7 @@ Metrics_Calc AS(
     from Source 
         join timeframe 
         on Report_Dt between timeframe.YEAR_START and timeframe.YEAR_END
-        and Report_Dt <= TimeFrameID
+        and Report_Dt <= TimeFrameID and Source.entity_code = timeframe.source_type
         join date_range
         on TimeFrameID = date_range.date_day        
     group by

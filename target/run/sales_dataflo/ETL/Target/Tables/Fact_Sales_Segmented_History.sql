@@ -146,8 +146,8 @@ select * from filtered
   on TimeFrameID = date_range.date_day
   ), 
 Emp AS
-( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , TimeFrameID join_Date FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
-cross join timeframe
+( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , source_type, TimeFrameID as join_Date  FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
+ join timeframe on source_type = timeframe.source_type
 ),
 
  Source AS
@@ -166,9 +166,9 @@ cross join timeframe
         count(INITIAL_CREATE_DT)  as Count
      from Emp 
           join timeframe 
-          on join_Date = TimeFrameID
+          on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type
           left join Source 
-          on Emp.Emp_id = source.employee_id
+          on Emp.Emp_id = source.employee_id  and Emp.source_type = source.source_type
           and cast( INITIAL_CREATE_DT as date) between timeframe.Day_START and timeframe.Day_END 
           join date_range
           on TimeFrameID = date_range.date_day
@@ -336,8 +336,8 @@ select * from filtered
   on TimeFrameID = date_range.date_day
   ), 
 Emp AS
-( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , TimeFrameID join_Date FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
-cross join timeframe
+( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , source_type, TimeFrameID as join_Date  FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
+ join timeframe on source_type = timeframe.source_type
 ),
 
  Source AS
@@ -356,9 +356,9 @@ cross join timeframe
         count(INITIAL_CREATE_DT)  as Count
      from Emp 
           join timeframe 
-          on join_Date = TimeFrameID
+          on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type
           left join Source 
-          on Emp.Emp_id = source.employee_id
+          on Emp.Emp_id = source.employee_id  and Emp.source_type = source.source_type
           and cast( INITIAL_CREATE_DT as date) between timeframe.Day_START and timeframe.Day_END 
           join date_range
           on TimeFrameID = date_range.date_day
@@ -526,8 +526,8 @@ select * from filtered
   on TimeFrameID = date_range.date_day
   ), 
 Emp AS
-( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , TimeFrameID join_Date FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
-cross join timeframe
+( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , source_type, TimeFrameID as join_Date  FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
+ join timeframe on source_type = timeframe.source_type
 ),
 
  Source AS
@@ -546,9 +546,9 @@ cross join timeframe
         count(INITIAL_CREATE_DT)  as Count
      from Emp 
           join timeframe 
-          on join_Date = TimeFrameID
+          on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type
           left join Source 
-          on Emp.Emp_id = source.employee_id
+          on Emp.Emp_id = source.employee_id  and Emp.source_type = source.source_type
           and cast( INITIAL_CREATE_DT as date) between timeframe.Day_START and timeframe.Day_END 
           join date_range
           on TimeFrameID = date_range.date_day
@@ -716,8 +716,8 @@ select * from filtered
   on TimeFrameID = date_range.date_day
   ), 
 Emp AS
-( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , TimeFrameID join_Date FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
-cross join timeframe
+( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , source_type, TimeFrameID as join_Date  FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
+ join timeframe on source_type = timeframe.source_type
 ),
 
  Source AS
@@ -736,9 +736,9 @@ cross join timeframe
         count(INITIAL_CREATE_DT)  as Count
      from Emp 
           join timeframe 
-          on join_Date = TimeFrameID
+          on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type
           left join Source 
-          on Emp.Emp_id = source.employee_id
+          on Emp.Emp_id = source.employee_id  and Emp.source_type = source.source_type
           and cast( INITIAL_CREATE_DT as date) between timeframe.Day_START and timeframe.Day_END 
           join date_range
           on TimeFrameID = date_range.date_day
@@ -906,8 +906,8 @@ select * from filtered
   on TimeFrameID = date_range.date_day
   ), 
 Emp AS
-( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , TimeFrameID join_Date FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
-cross join timeframe
+( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , source_type, TimeFrameID as join_Date  FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
+ join timeframe on source_type = timeframe.source_type
 ),
 
  Source AS
@@ -926,9 +926,9 @@ cross join timeframe
         count(INITIAL_CREATE_DT)  as Count
      from Emp 
           join timeframe 
-          on join_Date = TimeFrameID
+          on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type
           left join Source 
-          on Emp.Emp_id = source.employee_id
+          on Emp.Emp_id = source.employee_id  and Emp.source_type = source.source_type
           and cast( INITIAL_CREATE_DT as date) between timeframe.Day_START and timeframe.Day_END 
           join date_range
           on TimeFrameID = date_range.date_day
@@ -1096,8 +1096,8 @@ select * from filtered
   on TimeFrameID = date_range.date_day
   ), 
 Emp AS
-( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , TimeFrameID join_Date FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
-cross join timeframe
+( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , source_type, TimeFrameID as join_Date  FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
+ join timeframe on source_type = timeframe.source_type
 ),
 
  Source AS
@@ -1116,9 +1116,9 @@ cross join timeframe
         count(INITIAL_CREATE_DT)  as Count
      from Emp 
           join timeframe 
-          on join_Date = TimeFrameID
+          on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type
           left join Source 
-          on Emp.Emp_id = source.employee_id
+          on Emp.Emp_id = source.employee_id  and Emp.source_type = source.source_type
           and cast( INITIAL_CREATE_DT as date) between timeframe.Day_START and timeframe.Day_END 
           join date_range
           on TimeFrameID = date_range.date_day
@@ -1286,8 +1286,8 @@ select * from filtered
   on TimeFrameID = date_range.date_day
   ), 
 Emp AS
-( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , TimeFrameID join_Date FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
-cross join timeframe
+( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , source_type, TimeFrameID as join_Date  FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
+ join timeframe on source_type = timeframe.source_type
 ),
 
  Source AS
@@ -1306,9 +1306,9 @@ cross join timeframe
         count(INITIAL_CREATE_DT)  as Count
      from Emp 
           join timeframe 
-          on join_Date = TimeFrameID
+          on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type
           left join Source 
-          on Emp.Emp_id = source.employee_id
+          on Emp.Emp_id = source.employee_id  and Emp.source_type = source.source_type
           and cast( INITIAL_CREATE_DT as date) between timeframe.Day_START and timeframe.Day_END 
           join date_range
           on TimeFrameID = date_range.date_day
@@ -1476,8 +1476,8 @@ select * from filtered
   on TimeFrameID = date_range.date_day
   ), 
 Emp AS
-( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , TimeFrameID join_Date FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
-cross join timeframe
+( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , source_type, TimeFrameID as join_Date  FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
+ join timeframe on source_type = timeframe.source_type
 ),
 
  Source AS
@@ -1496,9 +1496,9 @@ cross join timeframe
         count(INITIAL_CREATE_DT)  as Count
      from Emp 
           join timeframe 
-          on join_Date = TimeFrameID
+          on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type
           left join Source 
-          on Emp.Emp_id = source.employee_id
+          on Emp.Emp_id = source.employee_id  and Emp.source_type = source.source_type
           and cast( INITIAL_CREATE_DT as date) between timeframe.Day_START and timeframe.Day_END 
           join date_range
           on TimeFrameID = date_range.date_day
@@ -1666,8 +1666,8 @@ select * from filtered
   on TimeFrameID = date_range.date_day
   ), 
 Emp AS
-( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , TimeFrameID join_Date FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
-cross join timeframe
+( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , source_type, TimeFrameID as join_Date  FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
+ join timeframe on source_type = timeframe.source_type
 ),
 
  Source AS
@@ -1686,9 +1686,9 @@ cross join timeframe
         count(INITIAL_CREATE_DT)  as Count
      from Emp 
           join timeframe 
-          on join_Date = TimeFrameID
+          on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type
           left join Source 
-          on Emp.Emp_id = source.employee_id
+          on Emp.Emp_id = source.employee_id  and Emp.source_type = source.source_type
           and cast( INITIAL_CREATE_DT as date) between timeframe.Day_START and timeframe.Day_END 
           join date_range
           on TimeFrameID = date_range.date_day
@@ -1856,8 +1856,8 @@ select * from filtered
   on TimeFrameID = date_range.date_day
   ), 
 Emp AS
-( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , TimeFrameID join_Date FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
-cross join timeframe
+( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , source_type, TimeFrameID as join_Date  FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
+ join timeframe on source_type = timeframe.source_type
 ),
 
  Source AS
@@ -1876,9 +1876,9 @@ cross join timeframe
         count(INITIAL_CREATE_DT)  as Count
      from Emp 
           join timeframe 
-          on join_Date = TimeFrameID
+          on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type
           left join Source 
-          on Emp.Emp_id = source.employee_id
+          on Emp.Emp_id = source.employee_id  and Emp.source_type = source.source_type
           and cast( INITIAL_CREATE_DT as date) between timeframe.Day_START and timeframe.Day_END 
           join date_range
           on TimeFrameID = date_range.date_day
@@ -2046,8 +2046,8 @@ select * from filtered
   on TimeFrameID = date_range.date_day
   ), 
 Emp AS
-( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , TimeFrameID join_Date FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
-cross join timeframe
+( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , source_type, TimeFrameID as join_Date  FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
+ join timeframe on source_type = timeframe.source_type
 ),
 
  Source AS
@@ -2066,9 +2066,9 @@ cross join timeframe
         count(INITIAL_CREATE_DT)  as Count
      from Emp 
           join timeframe 
-          on join_Date = TimeFrameID
+          on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type
           left join Source 
-          on Emp.Emp_id = source.employee_id
+          on Emp.Emp_id = source.employee_id  and Emp.source_type = source.source_type
           and cast( INITIAL_CREATE_DT as date) between timeframe.Day_START and timeframe.Day_END 
           join date_range
           on TimeFrameID = date_range.date_day
@@ -2236,8 +2236,8 @@ select * from filtered
   on TimeFrameID = date_range.date_day
   ), 
 Emp AS
-( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , TimeFrameID join_Date FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
-cross join timeframe
+( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , source_type, TimeFrameID as join_Date  FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
+ join timeframe on source_type = timeframe.source_type
 ),
 
  Source AS
@@ -2256,9 +2256,9 @@ cross join timeframe
         count(INITIAL_CREATE_DT)  as Count
      from Emp 
           join timeframe 
-          on join_Date = TimeFrameID
+          on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type
           left join Source 
-          on Emp.Emp_id = source.employee_id
+          on Emp.Emp_id = source.employee_id  and Emp.source_type = source.source_type
           and cast( INITIAL_CREATE_DT as date) between timeframe.Day_START and timeframe.Day_END 
           join date_range
           on TimeFrameID = date_range.date_day

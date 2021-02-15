@@ -3,19 +3,11 @@
 
 
 WITH contacts AS (
-       select *  from DBT_TEST_LIVEDATA_RK.Contact 
+       select * from DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Contact 
     ),
 Dim_Contact as(
       SELECT 
-        md5(cast(
-    
-    coalesce(cast(contacts.id as 
-    varchar
-), '')
-
- as 
-    varchar
-)) AS contact_id, 
+        contact_id, 
         contacts.salutation AS salutation, 
         contacts.NAME AS contact_name, 
         contacts.last_name AS last_name, 
@@ -24,7 +16,7 @@ Dim_Contact as(
         contacts.mobile_phone AS mobile_phone, 
         contacts.home_phone AS home_phone, 
         contacts.email AS contact_email, 
-        contacts.id AS source_id, 
+        source_id, 
         contacts.department AS department, 
         contacts.lead_source AS lead_source, 
         null AS organization_id, 

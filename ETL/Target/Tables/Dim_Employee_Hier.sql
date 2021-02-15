@@ -1,24 +1,20 @@
-{% for i in range(10) %}
-with recursive Emp_Hier as (
- select * from 
- (
- select distinct 
- a.entity_id,
- b.source_Emp_id as employee_id, 
- b.emp_position_level, 
- b.emp_role_id,
- a.mngr_emp_id
- a.mngr_position_level,
- a.mngr_role_id
- from 
- {{ ref('Dim_Employee') }} a
- join {{ ref('Dim_Employee') }} b
- on a.source_Emp_id = b.mngr_emp_id
- ) rslt
- where not exists 
- (Select 1 from {{ ref('Dim_Employee') }} e where rslt.employee_id = e.source_Emp_id and rslt.mngr_emp_id = e.mngr_emp_id)
- )
- {% if not loop.last %} union all {% endif %}
-{% endfor %}
+{{ config(
+    materialized="table"
+) 
+}}
 
- select * from Emp_Hier
+ select entity_id,
+ CONNECT_BY_ROOT source_Emp_id "Manager",
+ CONNECT_BY_ROOT emp_full_nm "Manager_Name",
+ LEVEL as hierarchy_level,
+ source_Emp_id as employee_id,
+ emp_full_nm as employee_Name,
+ mngr_emp_id as Manager_id,
+ emp_role_id ,
+ emp_position_level,
+ SYS_CONNECT_BY_PATH(emp_full_nm, '/') "Hierarachy"
+ from  {{ ref('Dim_Employee') }}  
+ START WITH mngr_emp_id is null
+ CONNECT BY PRIOR employee_id = mngr_emp_id
+
+ 

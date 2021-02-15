@@ -14,11 +14,11 @@
 }}
 
 WITH contacts AS (
-       select *  from {{ var('V_SF_Schema') }}.Contact 
+       select * from {{ ref('Stg_Contact') }} 
     ),
 Dim_Contact as(
       SELECT 
-        {{ dbt_utils.surrogate_key('contacts.id') }} AS contact_id, 
+        contact_id, 
         contacts.salutation AS salutation, 
         contacts.NAME AS contact_name, 
         contacts.last_name AS last_name, 
@@ -27,7 +27,7 @@ Dim_Contact as(
         contacts.mobile_phone AS mobile_phone, 
         contacts.home_phone AS home_phone, 
         contacts.email AS contact_email, 
-        contacts.id AS source_id, 
+        source_id, 
         contacts.department AS department, 
         contacts.lead_source AS lead_source, 
         null AS organization_id, 

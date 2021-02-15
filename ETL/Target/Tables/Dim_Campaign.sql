@@ -14,16 +14,17 @@
 }}
 
 WITH source AS (
-    select * from {{ var('V_SF_Schema') }}.Campaign 
+    select * from {{ ref('Stg_Campaign') }} 
     ),
 Dim_Campaign as (
 
       SELECT
         NULL AS Account_ID,
-        {{ dbt_utils.surrogate_key('id') }} AS Campaign_ID,
+        Campaign_ID,
+        OWNER_ID as Campaign_OWNER_ID,
         NAME AS Campaign_Name,
         IS_ACTIVE AS active_flag,
-        ID AS Source_ID,
+        Source_ID,
         TYPE AS TYPE,
         STATUS AS STATUS,
         START_DATE AS START_DATE,
@@ -41,7 +42,7 @@ Dim_Campaign as (
         NUMBER_OF_WON_OPPORTUNITIES AS NUMBER_OF_WON_OPPORTUNITIES,
         AMOUNT_ALL_OPPORTUNITIES AS AMOUNT_ALL_OPPORTUNITIES,
         AMOUNT_WON_OPPORTUNITIES AS AMOUNT_WON_OPPORTUNITIES,
-         {% if var("V_SF_CRM_ETL") == 'FIVETRAN_SF' %}  'SF' {% endif %} as Source_type,
+        Source_type,
         'D_CAMPAIGN_DIM_LOAD'  AS 	DW_SESSION_NM,
         {{ dbt_utils.current_timestamp() }} AS DW_INS_UPD_DTS 
      FROM

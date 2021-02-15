@@ -1,37 +1,35 @@
+--depends_on: DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Opportunity
+--depends_on: DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Contact
+--depends_on: DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_User
+--depends_on: DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Opportunity_Stage
+--depends_on: DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Deal
+--depends_on: DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Owner
+--depends_on: DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Deal_Pipeline_Stage
 
 
 
 
-    WITH OPPORTUNITY AS (
-       select *  from DBT_TEST_LIVEDATA_RK.opportunity 
+
+(
+WITH OPPORTUNITY AS (
+       select *  from DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Opportunity  
     ),contact AS(
-        select *  from DBT_TEST_LIVEDATA_RK.contact    
+        select *  from DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Contact    
     ),
     emp AS(
-        select *  from DBT_TEST_LIVEDATA_RK.user    
+        select *  from DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_User    
     ),
-    --OPPORTUNITY_LINE_ITEM AS(
-    --      select OPPORTUNITY_ID,PRODUCT_2_ID ,PRODUCT_CODE,TOTAL_PRICE from DBT_TEST_LIVEDATA_RK.OPPORTUNITY_LINE_ITEM
-     --),
     OPPORTUNITY_STAGE AS(
-        select *  from DBT_TEST_LIVEDATA_RK.opportunity_stage  
+        select *  from DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Opportunity_Stage   
     )
     ,Dim_Opportunity as(
     SELECT
-        md5(cast(
-    
-    coalesce(cast(OPPORTUNITY.id as 
-    varchar
-), '')
-
- as 
-    varchar
-)) AS opportunity_id,
+        opportunity_id,
         OPPORTUNITY.NAME AS opportunity_NAME,
         OPPORTUNITY.TYPE AS opportunity_Type, 
-        OPPORTUNITY.ACCOUNT_ID AS ACCOUNT_ID,        
-        OPPORTUNITY.OWNER_ID AS employee_id,
-        OPPORTUNITY.ID AS Source_id,
+        cast ( OPPORTUNITY.ACCOUNT_ID as varchar(50)) AS ACCOUNT_ID,        
+        cast ( OPPORTUNITY.OWNER_ID  as varchar(50)) AS employee_id,
+        cast ( OPPORTUNITY.Source_id as varchar(50)) as Source_id,
         OPPORTUNITY_STAGE.SORT_ORDER AS stage_id,
         OPPORTUNITY.IS_WON as IS_WON,
         OPPORTUNITY.IS_CLOSED as IS_CLOSED,
@@ -39,7 +37,6 @@
         --   OPPORTUNITY.PROBABILITY as PROBABILITY,        
         OPPORTUNITY.FORECAST_CATEGORY as FORECAST_CATEGORY,
         OPPORTUNITY.AMOUNT AS AMOUNT,
-        --OPPORTUNITY.EXPECTED_REVENUE as EXPECTED_REVENUE,
         NULL AS amount_without_disc,
         NULL AS expectd_Clouser_Dt,
         OPPORTUNITY.CONTACT_ID AS Contact_id,
@@ -55,35 +52,93 @@
         OPPORTUNITY_STAGE.CREATED_DATE AS stage_start_dt,
         NULL AS stage_end_dt,        
         NULL AS lead_lost_reason,
-        --OPPORTUNITY.CAMPAIGN_ID AS campaign_id,
         NULL AS competitor,
         NULL AS on_hold_flag,
-        --OPPORTUNITY_LINE_ITEM. PRODUCT_2_ID AS product_id,
-        --OPPORTUNITY_LINE_ITEM. PRODUCT_CODE AS product_name,
         NULL AS sub_product_id,
         NULL AS sub_product_name,
-        --OPPORTUNITY_LINE_ITEM. TOTAL_PRICE AS product_amount,
         NULL AS prd_amount_without_disc,
         NULL AS prd_discount,
         OPPORTUNITY. IS_DELETED AS active_flag,
         NULL AS DW_CURR_FLG,
         NULL AS EFFCT_START_DATE,
         NULL AS EFFCT_END_DATE,
-          'SF'  as Source_type,
+        OPPORTUNITY.Source_type as Source_type,
         'D_OPPORTUNITY_DIM_LOAD'  AS DW_SESSION_NM,
         
     current_timestamp::
     timestamp_ntz
 
- AS DW_INS_UPD_DTS 
+ AS DW_INS_UPD_DTS
       FROM
         OPPORTUNITY 
-        left join emp on OPPORTUNITY.Owner_id  =  emp.id
-        left join contact on emp.contact_id  =  contact.id
-        --left join OPPORTUNITY_LINE_ITEM on OPPORTUNITY.ID = OPPORTUNITY_LINE_ITEM.OPPORTUNITY_ID
-        left join OPPORTUNITY_STAGE on OPPORTUNITY.stage_name = OPPORTUNITY_STAGE.MASTER_LABEL
-     
-    )    
-    
+        left join emp on OPPORTUNITY.OWNER_ID  =  emp.Source_ID
+        left join contact on emp.contact_id  =  contact.Source_ID
+        left join OPPORTUNITY_STAGE on OPPORTUNITY.stage_name = OPPORTUNITY_STAGE.MASTER_LABEL 
+        and OPPORTUNITY_STAGE.Source_type = OPPORTUNITY.Source_type
+    ) 
+select * from Dim_Opportunity )   
+Union all 
+(WITH OPPORTUNITY AS (
+       select *  from DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Deal  
+    ),
+    emp AS(
+        select *  from DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Owner    
+    ),
+    OPPORTUNITY_STAGE AS(
+        select *  from DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Deal_Pipeline_Stage   
+    )
+    ,Dim_Opportunity as(
+    SELECT
+        DEAL_ID as opportunity_id,
+        OPPORTUNITY.PROPERTY_DEALNAME AS opportunity_NAME,
+        OPPORTUNITY.PROPERTY_DEALTYPE AS opportunity_Type, 
+        NULL AS ACCOUNT_ID,        
+        cast (OPPORTUNITY.OWNER_ID as varchar(50)) AS employee_id,
+        cast (OPPORTUNITY.Source_DEAL_ID as varchar(50)) as Source_id,
+        OPPORTUNITY_STAGE.DISPLAY_ORDER AS stage_id,
+        null as IS_WON,
+        OPPORTUNITY.PROPERTY_HS_IS_CLOSED as IS_CLOSED,
+        OPPORTUNITY.DEAL_PIPELINE_STAGE_ID AS stage_name,
+        --   OPPORTUNITY.PROBABILITY as PROBABILITY,        
+        OPPORTUNITY.PROPERTY_HS_MANUAL_FORECAST_CATEGORY as FORECAST_CATEGORY,
+        OPPORTUNITY.PROPERTY_AMOUNT AS AMOUNT,
+        NULL AS amount_without_disc,
+        NULL AS expectd_Clouser_Dt,
+        NULL AS Contact_id,
+        OPPORTUNITY.PROPERTY_POINT_OF_CONTACT AS contact_name,
+        NULL AS contact_number,
+        NULL AS contact_email,
+        NULL AS contact_address,
+        OPPORTUNITY.PROPERTY_CREATEDATE AS initial_create_dt,
+        NULL AS last_updated_dt,
+        OPPORTUNITY.PROPERTY_CLOSEDATE AS CLOSE_DATE,
+        NULL AS prospect_Dt,
+        NULL AS stage_calc_id,
+        OPPORTUNITY.PROPERTY_HS_CREATEDATE AS stage_start_dt,
+        NULL AS stage_end_dt,        
+        NULL AS lead_lost_reason,
+        NULL AS competitor,
+        NULL AS on_hold_flag,
+        NULL AS sub_product_id,
+        NULL AS sub_product_name,
+        NULL AS prd_amount_without_disc,
+        NULL AS prd_discount,
+        NULL AS active_flag,
+        NULL AS DW_CURR_FLG,
+        NULL AS EFFCT_START_DATE,
+        NULL AS EFFCT_END_DATE,
+        OPPORTUNITY.Source_type as Source_type,
+        'D_OPPORTUNITY_DIM_LOAD'  AS DW_SESSION_NM,
+        
+    current_timestamp::
+    timestamp_ntz
 
-select * from Dim_Opportunity
+ AS DW_INS_UPD_DTS  
+      FROM
+        OPPORTUNITY 
+        left join emp on OPPORTUNITY.Owner_id  =  emp.Source_OWNER_ID
+        left join OPPORTUNITY_STAGE on OPPORTUNITY.DEAL_PIPELINE_STAGE_ID = OPPORTUNITY_STAGE.SOURCE_STAGE_ID 
+        and OPPORTUNITY_STAGE.Source_type = OPPORTUNITY.Source_type
+    )  
+
+select * from Dim_Opportunity )
