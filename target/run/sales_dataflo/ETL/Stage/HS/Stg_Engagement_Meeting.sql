@@ -1,0 +1,13 @@
+
+    delete from DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Engagement_Meeting
+    where (ENGAGEMENT_Meeting_ID) in (
+        select (ENGAGEMENT_Meeting_ID)
+        from DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Engagement_Meeting__dbt_tmp
+    );
+    
+
+    insert into DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Engagement_Meeting ("ENGAGEMENT_MEETING_ID", "ENGAGEMENT_ID", "BODY", "START_TIME", "END_TIME", "TITLE", "EXTERNAL_URL", "SOURCE", "CREATED_FROM_LINK_ID", "SOURCE_ID", "WEB_CONFERENCE_MEETING_ID", "MEETING_OUTCOME", "PRE_MEETING_PROSPECT_REMINDERS", "_FIVETRAN_SYNCED", "SOURCE_TYPE", "DW_SESSION_NM", "DW_INS_UPD_DTS")
+    (
+        select "ENGAGEMENT_MEETING_ID", "ENGAGEMENT_ID", "BODY", "START_TIME", "END_TIME", "TITLE", "EXTERNAL_URL", "SOURCE", "CREATED_FROM_LINK_ID", "SOURCE_ID", "WEB_CONFERENCE_MEETING_ID", "MEETING_OUTCOME", "PRE_MEETING_PROSPECT_REMINDERS", "_FIVETRAN_SYNCED", "SOURCE_TYPE", "DW_SESSION_NM", "DW_INS_UPD_DTS"
+        from DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Engagement_Meeting__dbt_tmp
+    );

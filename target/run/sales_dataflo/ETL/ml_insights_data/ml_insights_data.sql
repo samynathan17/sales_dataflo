@@ -1,7 +1,6 @@
 
-
-      create or replace transient table DATAFLOTEST_DATABASE.dbt_salesdataflo_ml_insights_data.ml_insights_data  as
-      (With Campaign AS(
+  create or replace  view DATAFLOTEST_DATABASE.dbt_salesdataflo.ml_insights_data  as (
+    With Campaign AS(
     select *  from DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Campaign
 ),Employee AS(
     select *  from DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee
@@ -147,5 +146,4 @@
 
  )
 select *  from insight --where CAMPAIGN_OWNER_ID ='0055g000000Y5auAAC' 0055g000000Y5auAAC
-      );
-    
+  );

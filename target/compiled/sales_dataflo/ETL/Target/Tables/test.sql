@@ -1,7 +1,12 @@
+with base as (
 
-        (
-             with date_range as 
+    select *
+    from DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_LinkedIn
+
+),
+date_range as 
 (
+
     
 
 /*
@@ -53,9 +58,6 @@ with rawdata as (
      + 
     
     p8.generated_number * pow(2, 8)
-     + 
-    
-    p9.generated_number * pow(2, 9)
     
     
     + 1
@@ -89,9 +91,6 @@ with rawdata as (
      cross join 
     
     p as p8
-     cross join 
-    
-    p as p9
     
     
 
@@ -99,7 +98,7 @@ with rawdata as (
 
     select *
     from unioned
-    where generated_number <= 729
+    where generated_number <= 508
     order by generated_number
 
 
@@ -115,7 +114,7 @@ all_periods as (
     dateadd(
         day,
         row_number() over (order by 1) - 1,
-        to_date('01/01/2017', 'dd/mm/yyyy')
+        to_date('01/01/2021', 'dd/mm/yyyy')
         )
 
 
@@ -129,60 +128,36 @@ filtered as (
 
     select *
     from all_periods
-    where date_day <= to_date('31/12/2018', 'dd/mm/yyyy')
+    where date_day <= dateadd(week, 53, current_date)
 
 )
 
 select * from filtered
 
 
-),
- timeframe as (
-  select * from DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_TimeFrame 
+) ,
+timeframe as (
+  select * from DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Calendar 
   join date_range 
-  on TimeFrameID = date_range.date_day
-  ), 
-Emp AS
-( SELECT source_Emp_id as Emp_id, Entity_id as Emp_Entity_id , source_type,  TimeFrameID as join_Date FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Employee  
- join timeframe on source_type = timeframe.source_type
-),
-
- Source AS
-   ( SELECT * FROM  DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Opportunity  Where upper(IS_WON) = 'TRUE' )
- 
-,Metrics_Calc AS(
-    SELECT
-        TimeFrameID AS Report_Dt,
-        Emp_Entity_id  AS entity_code,
-        Emp_id AS employee_code,
-        cast('1' as number) as METRIC_ID,
-        cast('1' as number)  AS METRIC_CATEGORY_ID,
-        'D' as TimeFrame_Type,
-        sum( Amount  ) as AMOUNT,
-        count(INITIAL_CREATE_DT)  as Count
-     from Emp 
-          join timeframe 
-          on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type
-          left join Source 
-          on Emp.Emp_id = source.employee_id  and Emp.source_type = source.source_type
-          and cast( INITIAL_CREATE_DT as date) between timeframe.Day_START and timeframe.Day_END 
-          join date_range
-          on TimeFrameID = date_range.date_day
-         group by
-        Report_Dt,
-        entity_code,
-        employee_code,
-        METRIC_ID,
-        METRIC_CATEGORY_ID
-        )
- SELECT Report_Dt, entity_code, employee_code,METRIC_ID,METRIC_CATEGORY_ID,nvl(amount,0) as Amount, count, 
-        nvl(AMOUNT/decode(count,0,1,count),0) as Average , 'D' TimeFrame_Type, 'D_SALES_FACT_LOAD' AS DW_SESSION_NM,
-        
-    current_timestamp::
-    timestamp_ntz
-
- AS DW_INS_UPD_DTS from Metrics_Calc
-      order by Report_Dt, METRIC_ID, TimeFrame_Type
-        )
-
-        
+  on CALENDAR_ID = date_range.date_day
+  order by CALENDAR_ID 
+)
+select 
+    'A' as platform,
+        Calendar_ID as Repot_date,
+        '100' as Metric_ID,
+        'W' as TimeFrame_Type,
+        Sum(clicks) as Sum_clicks,
+        Sum(impressions) as Sum_impressions,
+        Sum(spend) as Sum_spend,
+        Sum(clicks)/ Sum(impressions) as CTR_Click
+from base
+join timeframe 
+        on base.date_day  between timeframe.WEEK_START_DATE and timeframe.WEEK_END_DATE
+        and base.date_day <= Calendar_ID
+        join date_range
+        on Calendar_ID = date_range.date_day         
+group by platform, 
+Repot_date,
+Metric_ID,
+TimeFrame_Type

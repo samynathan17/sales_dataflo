@@ -32,14 +32,14 @@
         CREATED_DATE,
         LAST_MODIFIED_BY_ID,
         LAST_MODIFIED_DATE,
-        'SF_TESTUSER_31122020' as Source_type,
+        'SF_RKLIVE_06012021' as Source_type,
         'D_OPPORTUNITYSTAGES_STG_LOAD' AS DW_SESSION_NM,
         
     current_timestamp::
     timestamp_ntz
 
  AS DW_INS_UPD_DTS 
-    FROM SF_TESTUSER_31122020.opportunity_stage 
+    FROM SF_RKLIVE_06012021.opportunity_stage 
            
             UNION ALL
              
@@ -72,13 +72,13 @@
         CREATED_DATE,
         LAST_MODIFIED_BY_ID,
         LAST_MODIFIED_DATE,
-        'SF_RKLIVE_06012021' as Source_type,
+        'SF_TESTUSER_31122020' as Source_type,
         'D_OPPORTUNITYSTAGES_STG_LOAD' AS DW_SESSION_NM,
         
     current_timestamp::
     timestamp_ntz
 
  AS DW_INS_UPD_DTS 
-    FROM SF_RKLIVE_06012021.opportunity_stage 
+    FROM SF_TESTUSER_31122020.opportunity_stage 
              
        

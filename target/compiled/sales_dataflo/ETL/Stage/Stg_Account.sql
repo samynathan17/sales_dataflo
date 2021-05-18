@@ -51,14 +51,14 @@
         LAST_MODIFIED_BY_ID,
         ACCOUNT_SOURCE,
         SIC_DESC,
-        'SF_TESTUSER_31122020' as Source_type,
+        'SF_RKLIVE_06012021' as Source_type,
         'D_ACCOUNT_STG_LOAD' AS DW_SESSION_NM,
         
     current_timestamp::
     timestamp_ntz
 
  AS DW_INS_UPD_DTS 
-    FROM SF_TESTUSER_31122020.Account
+    FROM SF_RKLIVE_06012021.Account
          
             UNION ALL
         
@@ -109,13 +109,13 @@
         LAST_MODIFIED_BY_ID,
         ACCOUNT_SOURCE,
         SIC_DESC,
-        'SF_RKLIVE_06012021' as Source_type,
+        'SF_TESTUSER_31122020' as Source_type,
         'D_ACCOUNT_STG_LOAD' AS DW_SESSION_NM,
         
     current_timestamp::
     timestamp_ntz
 
  AS DW_INS_UPD_DTS 
-    FROM SF_RKLIVE_06012021.Account
+    FROM SF_TESTUSER_31122020.Account
          
     

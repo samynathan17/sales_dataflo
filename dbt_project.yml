@@ -35,13 +35,13 @@ models:
     Stage:
           materialized: table
           
+    Tables:
+          materialized: table      
+          
 # views settings
     Views:
           materialized: view
           
-    Tables:
-          materialized: table
-
     ml_insights_data:
           materialized: table
           schema: ml_insights_data
@@ -50,8 +50,22 @@ models:
 seeds:
   sales_dataflo:
     schema: seed
-          
+
+models:
+ +incremental_strategy: "delete+insert"
+     
 vars:
+  # Salesforce Schema and Table info
+  V_Entity_Schema          : ENTITY_SCHEMA
+  V_Schema                 : DBT_SALESDATAFLO
+  V_SF_CRM_ETL             : FIVETRAN_SF 
+  V_DB                     : DATAFLOTEST_DATABASE
+  V_Sales                  : ENTITY_DATASOURCES
+  V_Mkt                    : ENTITY_DATASOURCES
+
+
+  linkedin__use_local_currency: true
+
   enable_SF_source : true
   
   enable_crm_warehouse :                true
@@ -61,9 +75,10 @@ vars:
   enable_ads_warehouse :                false
   enable_product_warehouse :            false
   enable_subscriptions_warehouse :      false
+  
+  ad_reporting__linkedin_ads_enabled: true
+  ad_reporting__google_ads_enabled: true
+  ad_reporting__facebook_ads_enabled: true
 
-  # Salesforce Schema and Table info
-  V_Schema                 : DBT_SALESDATAFLO
-  V_SF_CRM_ETL             : FIVETRAN_SF 
-  V_DB                     : DATAFLOTEST_DATABASE
+
   

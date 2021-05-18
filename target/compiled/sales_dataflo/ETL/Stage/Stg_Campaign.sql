@@ -49,14 +49,14 @@
         LAST_VIEWED_DATE,
         LAST_REFERENCED_DATE,
         CAMPAIGN_MEMBER_RECORD_TYPE_ID,
-        'SF_TESTUSER_31122020' as Source_type,
+        'SF_RKLIVE_06012021' as Source_type,
         'D_CAMPAIGN_STG_LOAD' AS DW_SESSION_NM,
         
     current_timestamp::
     timestamp_ntz
 
  AS DW_INS_UPD_DTS 
-    FROM SF_TESTUSER_31122020.Campaign
+    FROM SF_RKLIVE_06012021.Campaign
         
             UNION ALL
           
@@ -107,14 +107,14 @@
         LAST_VIEWED_DATE,
         LAST_REFERENCED_DATE,
         CAMPAIGN_MEMBER_RECORD_TYPE_ID,
-        'SF_RKLIVE_06012021' as Source_type,
+        'SF_TESTUSER_31122020' as Source_type,
         'D_CAMPAIGN_STG_LOAD' AS DW_SESSION_NM,
         
     current_timestamp::
     timestamp_ntz
 
  AS DW_INS_UPD_DTS 
-    FROM SF_RKLIVE_06012021.Campaign
+    FROM SF_TESTUSER_31122020.Campaign
           
      
 

@@ -16,4 +16,16 @@ union
 Select 7 metric_category_id,'Sub-list' metrics_category,'D_METRICS_DIM_LOAD' DW_SESSION_NM,CURRENT_TIMESTAMP DW_INS_UPD_DTS
 union
 Select 8 metric_category_id,'Funnel' metrics_category,'D_METRICS_DIM_LOAD' DW_SESSION_NM,CURRENT_TIMESTAMP DW_INS_UPD_DTS
+union
+Select 9 metric_category_id,'Awareness' metrics_category,'D_METRICS_DIM_LOAD' DW_SESSION_NM,CURRENT_TIMESTAMP DW_INS_UPD_DTS
+union
+Select 10 metric_category_id,'Basic' metrics_category,'D_METRICS_DIM_LOAD' DW_SESSION_NM,CURRENT_TIMESTAMP DW_INS_UPD_DTS
+union
+Select 11 metric_category_id,'Engagement' metrics_category,'D_METRICS_DIM_LOAD' DW_SESSION_NM,CURRENT_TIMESTAMP DW_INS_UPD_DTS
+union
+Select 12 metric_category_id,'Analysis' metrics_category,'D_METRICS_DIM_LOAD' DW_SESSION_NM,CURRENT_TIMESTAMP DW_INS_UPD_DTS
+union
+Select 13 metric_category_id,'Cost' metrics_category,'D_METRICS_DIM_LOAD' DW_SESSION_NM,CURRENT_TIMESTAMP DW_INS_UPD_DTS
+union
+Select 14 metric_category_id,'Conversions' metrics_category,'D_METRICS_DIM_LOAD' DW_SESSION_NM,CURRENT_TIMESTAMP DW_INS_UPD_DTS
 )

@@ -1,171 +1,89 @@
-{{ config(
-    materialized="table"
-) 
+--depends_on: {{ ref('Temp_Sales_Segmented') }}
+-- depends_on: {{ ref('Dim_TimeFrame') }}
+
+{% set results = get_column_values_from_query("select * from " ~ var('V_DB') ~ "." ~ var('V_Entity_Schema')~ "." ~ var('V_Sales')~" where DATASOURCE_TYPE in('SF','HS')", "ENTITY_DATASORUCE_NAME||'#'||HISTORY_LOAD||'#'||TO_VARCHAR(nvl(HISTORY_START_DATE,HISTORY_ACTUAL_START_DATE)::DATE, 'DD/MM/YYYY')||'#'||TO_VARCHAR(HISTORY_END_DATE::DATE, 'DD/MM/YYYY')") %}
+{% set pits = get_column_values_from_query("select * from " ~ var('V_DB') ~ "." ~ var('V_Schema')~ ".TEMP_SALES_SEGMENTED", "METRIC_ID||'#'||POINT_IN_TIME") %}
+
+{% if not var("enable_SF_source") %}
+{{
+    config(
+        enabled=false
+    )
+}}
+{% endif %}
+
+{{
+    config(
+        materialized='incremental',
+        unique_key= 'Report_Date1'
+      )
+	  
 }}
 
-with date_range as 
-(
-    {{ dbt_utils.date_spine(
-        datepart="day",
-        start_date="to_date('01/01/2017', 'dd/mm/yyyy')",
-        end_date="to_date('31/12/2018', 'dd/mm/yyyy')"
-       )
-    }}
-),
- timeframe as (
-  select * from {{ ref('Dim_TimeFrame') }} 
-  join date_range 
-  on TimeFrameID = date_range.date_day
-  ),  
-Source AS
-( SELECT * FROM  {{ ref('Fact_Sales_Segmented_History') }}
-),
-Metrics_Calc AS(
-    SELECT
-        TimeFrameID as Report_Date,
-        entity_code  AS entity_id,
-        employee_code AS employee_id,
-        METRIC_ID,
-        METRIC_CATEGORY_ID,
-        Segment_Name,
-        'D' as TimeFrame_Type,
-        sum(AMOUNT) as AMOUNT,
-        sum(count) as COUNT,  
-        Source.DW_SESSION_NM,
-        Source.DW_INS_UPD_DTS
-    from Source 
-        join timeframe 
-        on Report_Dt between timeframe.DAY_START and timeframe.DAY_END and Source.entity_code = timeframe.source_type
-        join date_range
-        on TimeFrameID = date_range.date_day
-    group by
-        Report_Date,
-        entity_id,
-        employee_id,
-        METRIC_ID,
-        METRIC_CATEGORY_ID,
-        Segment_Name,
-        TimeFrame_Type,
-        Source.DW_SESSION_NM,
-        Source.DW_INS_UPD_DTS
-     Union
-        SELECT
-        TimeFrameID as Report_Date,
-        entity_code  AS entity_id,
-        employee_code AS employee_id,
-        METRIC_ID,
-        METRIC_CATEGORY_ID,
-        Segment_Name,
-        'W' as TimeFrame_Type,
-        sum(AMOUNT) as AMOUNT,
-        sum(count) as COUNT,  
-        Source.DW_SESSION_NM,
-        Source.DW_INS_UPD_DTS
-    from Source 
-        join timeframe 
-        on Report_Dt between timeframe.WEEK_START and timeframe.WEEK_END
-        and Report_Dt <= TimeFrameID and Source.entity_code = timeframe.source_type
-        join date_range
-        on TimeFrameID = date_range.date_day        
-    group by
-        Report_Date,
-        entity_id,
-        employee_id,
-        METRIC_ID,
-        METRIC_CATEGORY_ID,
-        Segment_Name,
-        TimeFrame_Type,
-        Source.DW_SESSION_NM,
-        Source.DW_INS_UPD_DTS
-     Union
-        SELECT
-        TimeFrameID as Report_Date,
-        entity_code  AS entity_id,
-        employee_code AS employee_id,
-        METRIC_ID,
-        METRIC_CATEGORY_ID,
-        Segment_Name,
-        'M' as TimeFrame_Type,
-        sum(AMOUNT) as AMOUNT,
-        sum(count) as COUNT,  
-        Source.DW_SESSION_NM,
-        Source.DW_INS_UPD_DTS
-    from Source 
-        join timeframe 
-        on Report_Dt between timeframe.MONTH_START and timeframe.MONTH_END
-        and Report_Dt <= TimeFrameID and Source.entity_code = timeframe.source_type
-        join date_range
-        on TimeFrameID = date_range.date_day        
-    group by
-        Report_Date,
-        entity_id,
-        employee_id,
-        METRIC_ID,
-        METRIC_CATEGORY_ID,
-        Segment_Name,
-        TimeFrame_Type,
-        Source.DW_SESSION_NM,
-        Source.DW_INS_UPD_DTS
-     Union
-        SELECT
-        TimeFrameID as Report_Date,
-        entity_code  AS entity_id,
-        employee_code AS employee_id,
-        METRIC_ID,
-        METRIC_CATEGORY_ID,
-        Segment_Name,
-        'Q' as TimeFrame_Type,
-        sum(AMOUNT) as AMOUNT,
-        sum(count) as COUNT,  
-        Source.DW_SESSION_NM,
-        Source.DW_INS_UPD_DTS
-    from Source 
-        join timeframe 
-        on Report_Dt between timeframe.QUARTER_START and timeframe.QUARTER_END
-        and Report_Dt <= TimeFrameID and Source.entity_code = timeframe.source_type
-        join date_range
-        on TimeFrameID = date_range.date_day        
-    group by
-        Report_Date,
-        entity_id,
-        employee_id,
-        METRIC_ID,
-        METRIC_CATEGORY_ID,
-        Segment_Name,
-        TimeFrame_Type,
-        Source.DW_SESSION_NM,
-        Source.DW_INS_UPD_DTS
-     Union
-        SELECT
-        TimeFrameID as Report_Date,
-        entity_code  AS entity_id,
-        employee_code AS employee_id,
-        METRIC_ID,
-        METRIC_CATEGORY_ID,
-        Segment_Name,
-        'Y' as TimeFrame_Type,
-        sum(AMOUNT) as AMOUNT,
-        sum(count) as COUNT,  
-        Source.DW_SESSION_NM,
-        Source.DW_INS_UPD_DTS
-    from Source 
-        join timeframe 
-        on Report_Dt between timeframe.YEAR_START and timeframe.YEAR_END
-        and Report_Dt <= TimeFrameID and Source.entity_code = timeframe.source_type
-        join date_range
-        on TimeFrameID = date_range.date_day        
-    group by
-        Report_Date,
-        entity_id,
-        employee_id,
-        METRIC_ID,
-        METRIC_CATEGORY_ID,
-        Segment_Name,
-        TimeFrame_Type,
-        Source.DW_SESSION_NM,
-        Source.DW_INS_UPD_DTS                        
- )
- 
-SELECT Report_Date, entity_id, employee_id, METRIC_ID, METRIC_CATEGORY_ID, Segment_Name,TimeFrame_Type, AMOUNT, Count, 
-        nvl(AMOUNT/decode(count,0,1,count),0) as Average,  DW_SESSION_NM, DW_INS_UPD_DTS  from Metrics_Calc
-order by Report_Date, METRIC_ID,Segment_Name, TimeFrame_Type
+{% for V_SF_Schema in results %}
+{% set entity_name, hist_load, hist_strt_dt, hist_end_dt= V_SF_Schema.split('#') %}
+    {% if  hist_load  == 'true' %} 
+		   {% for V_PIT in pits %}
+		   {% set metricid, pit= V_PIT.split('#') %}
+					{% if  pit  == 'TRUE' %} 
+							{%- for metrics in [(fact_table_pit_segmented_hist(entity_name,metricid,hist_strt_dt,hist_end_dt))                
+								  ]  %}
+								  (
+								  {{ metrics }} 
+								  )
+							  
+								{% if not loop.last -%}
+									union all
+								{% endif -%}
+							{%- endfor -%}  
+					{% else -%}
+							{%- for metrics in [(fact_table_segmented_hist(entity_name,metricid,hist_strt_dt,hist_end_dt))                
+								  ]  %}
+								  (
+								  {{ metrics }}
+								  )
+							  
+								{% if not loop.last -%}
+									union all
+								{% endif -%}
+							{%- endfor -%}  
+					{% endif -%}
+			    {% if not loop.last -%}
+					union all
+				{% endif -%}
+			{%- endfor -%} 
+    {%- else -%}
+        {% for V_PIT in pit %}
+        {% set metricid, pit= V_PIT.split('#') %}
+					{% if  pit  == 'TRUE' %} 
+						{%- for metrics in [(fact_table_pit_segmented(entity_name,metricid))                
+								  ]  %}
+							  (
+							  {{ metrics }}
+							  )
+						  
+							{% if not loop.last -%}
+								union all
+							{% endif -%}
+						{%- endfor -%}  
+					{% else -%}
+						{%- for metrics in [(fact_table_segmented(entity_name,metricid))                
+								  ]  %}
+								  (
+								  {{ metrics }}
+								  )
+							  
+							{% if not loop.last -%}
+								union all
+							{% endif -%}
+						{%- endfor -%}  
+					{% endif -%}	
+		    {% if not loop.last -%}
+				union all
+			{% endif -%}
+		{%- endfor -%}	   
+    {% endif -%} 
+  {% if not loop.last -%}
+		union all
+	{% endif -%}	
+{%- endfor -%}

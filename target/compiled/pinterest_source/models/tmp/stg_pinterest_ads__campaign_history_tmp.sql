@@ -1,0 +1,2 @@
+select *
+from DATAFLOTEST_DATABASE.pinterest_ads.campaign_history

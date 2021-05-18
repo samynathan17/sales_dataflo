@@ -1,0 +1,2 @@
+select *
+from DATAFLOTEST_DATABASE.adwords.criteria_performance

@@ -1,0 +1,13 @@
+
+    delete from DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Channel_Traffic
+    where (ID) in (
+        select (ID)
+        from DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Channel_Traffic__dbt_tmp
+    );
+    
+
+    insert into DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Channel_Traffic ("ID", "DATE", "PROFILE", "CHANNEL_GROUPING", "GOAL_VALUE_ALL", "NEW_USERS", "SESSIONS", "AVG_SESSION_DURATION", "GOAL_COMPLETIONS_ALL", "PAGEVIEWS_PER_SESSION", "GOAL_CONVERSION_RATE_ALL", "USERS", "BOUNCE_RATE", "PERCENT_NEW_SESSIONS", "SOURCE_TYPE", "DW_SESSION_NM", "DW_INS_UPD_DTS")
+    (
+        select "ID", "DATE", "PROFILE", "CHANNEL_GROUPING", "GOAL_VALUE_ALL", "NEW_USERS", "SESSIONS", "AVG_SESSION_DURATION", "GOAL_COMPLETIONS_ALL", "PAGEVIEWS_PER_SESSION", "GOAL_CONVERSION_RATE_ALL", "USERS", "BOUNCE_RATE", "PERCENT_NEW_SESSIONS", "SOURCE_TYPE", "DW_SESSION_NM", "DW_INS_UPD_DTS"
+        from DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Channel_Traffic__dbt_tmp
+    );

@@ -33,14 +33,14 @@ select
         PORTAL_ACCOUNT_ID,
         PORTAL_TYPE,
         PORTAL_ACCOUNT_OWNER_ID,
-        'SF_TESTUSER_31122020' as Source_type,
+        'SF_RKLIVE_06012021' as Source_type,
         'D_USER_ROLE_STG_LOAD' AS DW_SESSION_NM,
         
     current_timestamp::
     timestamp_ntz
 
  AS DW_INS_UPD_DTS 
-    FROM SF_TESTUSER_31122020.user_role
+    FROM SF_RKLIVE_06012021.user_role
             
                UNION ALL
               
@@ -75,14 +75,14 @@ select
         PORTAL_ACCOUNT_ID,
         PORTAL_TYPE,
         PORTAL_ACCOUNT_OWNER_ID,
-        'SF_RKLIVE_06012021' as Source_type,
+        'SF_TESTUSER_31122020' as Source_type,
         'D_USER_ROLE_STG_LOAD' AS DW_SESSION_NM,
         
     current_timestamp::
     timestamp_ntz
 
  AS DW_INS_UPD_DTS 
-    FROM SF_RKLIVE_06012021.user_role
+    FROM SF_TESTUSER_31122020.user_role
               
         
 

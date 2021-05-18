@@ -1,0 +1,2 @@
+select *
+from DATAFLOTEST_DATABASE.LINKEDIN_ADS_19032021.account_history

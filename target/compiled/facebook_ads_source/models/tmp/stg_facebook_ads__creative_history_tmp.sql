@@ -1,0 +1,1 @@
+select * from DATAFLOTEST_DATABASE.FB_ADS_DRGRILL_30032021.creative_history

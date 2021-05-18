@@ -57,14 +57,14 @@
         EMAIL_BOUNCED_REASON,
         EMAIL_BOUNCED_DATE,
         IS_EMAIL_BOUNCED,
-        'SF_TESTUSER_31122020' as Source_type,
+        'SF_RKLIVE_06012021' as Source_type,
         'D_CONTACT_STG_LOAD' AS DW_SESSION_NM,
         
     current_timestamp::
     timestamp_ntz
 
  AS DW_INS_UPD_DTS 
-    FROM SF_TESTUSER_31122020.Contact
+    FROM SF_RKLIVE_06012021.Contact
         
             UNION ALL
           
@@ -122,13 +122,13 @@
         EMAIL_BOUNCED_REASON,
         EMAIL_BOUNCED_DATE,
         IS_EMAIL_BOUNCED,
-        'SF_RKLIVE_06012021' as Source_type,
+        'SF_TESTUSER_31122020' as Source_type,
         'D_CONTACT_STG_LOAD' AS DW_SESSION_NM,
         
     current_timestamp::
     timestamp_ntz
 
  AS DW_INS_UPD_DTS 
-    FROM SF_RKLIVE_06012021.Contact
+    FROM SF_TESTUSER_31122020.Contact
           
     

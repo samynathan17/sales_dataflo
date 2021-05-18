@@ -160,13 +160,13 @@ Emp AS
         'D' as TimeFrame_Type,
         cast(STAGE_NAME as varchar(1000)) As Segment_name,
         sum( Amount  ) as AMOUNT,
-        count(INITIAL_CREATE_DT)  as Count
+        count(SOURCE_ID)  as Count
      from Emp 
           join timeframe 
           on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type
           left join Source 
           on Emp.Emp_id = source.employee_id  and Emp.source_type = source.source_type
-          and cast( INITIAL_CREATE_DT as date) between timeframe.Day_START and timeframe.Day_END 
+          and cast( CLOSE_DATE as date) between timeframe.Day_START and timeframe.Day_END 
           join date_range
           on TimeFrameID = date_range.date_day
          group by
@@ -350,7 +350,7 @@ Emp AS
         'D' as TimeFrame_Type,
         cast(INDUSTRY as varchar(1000)) As Segment_name,
         sum( 0   ) as AMOUNT,
-        count(INITIAL_CREATE_DT)  as Count
+        count(SOURCE_ID)  as Count
      from Emp 
           join timeframe 
           on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type
@@ -540,13 +540,13 @@ Emp AS
         'D' as TimeFrame_Type,
         cast(EMPLOYEE_ID as varchar(1000)) As Segment_name,
         sum( Amount  ) as AMOUNT,
-        count(INITIAL_CREATE_DT)  as Count
+        count(SOURCE_ID)  as Count
      from Emp 
           join timeframe 
           on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type
           left join Source 
           on Emp.Emp_id = source.employee_id  and Emp.source_type = source.source_type
-          and cast( INITIAL_CREATE_DT as date) between timeframe.Day_START and timeframe.Day_END 
+          and cast( CLOSE_DATE as date) between timeframe.Day_START and timeframe.Day_END 
           join date_range
           on TimeFrameID = date_range.date_day
          group by
@@ -730,13 +730,13 @@ Emp AS
         'D' as TimeFrame_Type,
         cast(OPPORTUNITY_NAME as varchar(1000)) As Segment_name,
         sum( Amount  ) as AMOUNT,
-        count(INITIAL_CREATE_DT)  as Count
+        count(SOURCE_ID)  as Count
      from Emp 
           join timeframe 
           on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type
           left join Source 
           on Emp.Emp_id = source.employee_id  and Emp.source_type = source.source_type
-          and cast( INITIAL_CREATE_DT as date) between timeframe.Day_START and timeframe.Day_END 
+          and cast( CLOSE_DATE as date) between timeframe.Day_START and timeframe.Day_END 
           join date_range
           on TimeFrameID = date_range.date_day
          group by
@@ -920,7 +920,7 @@ Emp AS
         'D' as TimeFrame_Type,
         cast(LEAD_SOURCE as varchar(1000)) As Segment_name,
         sum( 0   ) as AMOUNT,
-        count(INITIAL_CREATE_DT)  as Count
+        count(SOURCE_ID)  as Count
      from Emp 
           join timeframe 
           on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type
@@ -1110,7 +1110,7 @@ Emp AS
         'D' as TimeFrame_Type,
         cast(STATUS as varchar(1000)) As Segment_name,
         sum( 0   ) as AMOUNT,
-        count(INITIAL_CREATE_DT)  as Count
+        count(SOURCE_ID)  as Count
      from Emp 
           join timeframe 
           on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type
@@ -1300,13 +1300,13 @@ Emp AS
         'D' as TimeFrame_Type,
         cast(OPPORTUNITY_NAME as varchar(1000)) As Segment_name,
         sum( Amount  ) as AMOUNT,
-        count(INITIAL_CREATE_DT)  as Count
+        count(SOURCE_ID)  as Count
      from Emp 
           join timeframe 
           on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type
           left join Source 
           on Emp.Emp_id = source.employee_id  and Emp.source_type = source.source_type
-          and cast( INITIAL_CREATE_DT as date) between timeframe.Day_START and timeframe.Day_END 
+          and cast( CLOSE_DATE as date) between timeframe.Day_START and timeframe.Day_END 
           join date_range
           on TimeFrameID = date_range.date_day
          group by
@@ -1490,13 +1490,13 @@ Emp AS
         'D' as TimeFrame_Type,
         cast(OPPORTUNITY_NAME as varchar(1000)) As Segment_name,
         sum( Amount  ) as AMOUNT,
-        count(INITIAL_CREATE_DT)  as Count
+        count(SOURCE_ID)  as Count
      from Emp 
           join timeframe 
           on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type
           left join Source 
           on Emp.Emp_id = source.employee_id  and Emp.source_type = source.source_type
-          and cast( INITIAL_CREATE_DT as date) between timeframe.Day_START and timeframe.Day_END 
+          and cast( CLOSE_DATE as date) between timeframe.Day_START and timeframe.Day_END 
           join date_range
           on TimeFrameID = date_range.date_day
          group by
@@ -1680,7 +1680,7 @@ Emp AS
         'D' as TimeFrame_Type,
         cast(EMPLOYEE_ID as varchar(1000)) As Segment_name,
         sum( 0   ) as AMOUNT,
-        count(INITIAL_CREATE_DT)  as Count
+        count(SOURCE_ID)  as Count
      from Emp 
           join timeframe 
           on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type
@@ -1870,7 +1870,7 @@ Emp AS
         'D' as TimeFrame_Type,
         cast(EMPLOYEE_ID as varchar(1000)) As Segment_name,
         sum( 0   ) as AMOUNT,
-        count(INITIAL_CREATE_DT)  as Count
+        count(SOURCE_ID)  as Count
      from Emp 
           join timeframe 
           on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type
@@ -2060,7 +2060,7 @@ Emp AS
         'D' as TimeFrame_Type,
         cast(LEAD_CONTACT_ADDRESS as varchar(1000)) As Segment_name,
         sum( 0   ) as AMOUNT,
-        count(INITIAL_CREATE_DT)  as Count
+        count(SOURCE_ID)  as Count
      from Emp 
           join timeframe 
           on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type
@@ -2250,7 +2250,7 @@ Emp AS
         'D' as TimeFrame_Type,
         cast(OPPORTUNITY_TYPE as varchar(1000)) As Segment_name,
         sum( Amount  ) as AMOUNT,
-        count(INITIAL_CREATE_DT)  as Count
+        count(SOURCE_ID)  as Count
      from Emp 
           join timeframe 
           on join_Date = TimeFrameID and Emp.source_type = timeframe.source_type

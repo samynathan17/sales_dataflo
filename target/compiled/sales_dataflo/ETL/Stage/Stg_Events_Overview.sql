@@ -5,7 +5,7 @@
 
 
 
-  
+   
     
   select
         md5(cast(
@@ -26,16 +26,13 @@
         EVENTS_PER_SESSION_WITH_EVENT,
         AVG_EVENT_VALUE,
         UNIQUE_EVENTS,
-        'GA_DATAFLO_01022021' as Source_type,
+        'GA_DATAFLO_11022021' as Source_type,
         'D_EVENTS_OVERVIEW_STG_LOAD' AS DW_SESSION_NM,
         
     current_timestamp::
     timestamp_ntz
 
  AS DW_INS_UPD_DTS 
-    FROM GA_DATAFLO_01022021.EVENTS_OVERVIEW
+    FROM GA_DATAFLO_11022021.EVENTS_OVERVIEW
         
     
-
-
- 

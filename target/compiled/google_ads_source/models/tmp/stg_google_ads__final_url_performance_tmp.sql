@@ -1,0 +1,2 @@
+select *
+from DATAFLOTEST_DATABASE.adwords.final_url_performance

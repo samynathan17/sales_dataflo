@@ -63,3 +63,17 @@ models:
        tests: 
           - not_null
           - unique
+
+   - name: Stg_deal
+    columns:
+     - name: DEAL_ID
+       tests: 
+          - not_null
+          - unique       
+  
+  - name: Stg_deal
+    columns:
+     - name: DEAL_ID
+       tests: 
+          - not_null
+          - unique

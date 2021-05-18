@@ -66,14 +66,14 @@
         LAST_MODIFIED_DATE,
         LAST_MODIFIED_BY_ID,
         contact_id,
-        'SF_TESTUSER_31122020' as Source_type,
+        'SF_RKLIVE_06012021' as Source_type,
         'D_USER_ROLE_STG_LOAD' AS DW_SESSION_NM,
         
     current_timestamp::
     timestamp_ntz
 
  AS DW_INS_UPD_DTS 
-    FROM SF_TESTUSER_31122020.user
+    FROM SF_RKLIVE_06012021.user
        
             UNION ALL
             
@@ -140,13 +140,13 @@
         LAST_MODIFIED_DATE,
         LAST_MODIFIED_BY_ID,
         contact_id,
-        'SF_RKLIVE_06012021' as Source_type,
+        'SF_TESTUSER_31122020' as Source_type,
         'D_USER_ROLE_STG_LOAD' AS DW_SESSION_NM,
         
     current_timestamp::
     timestamp_ntz
 
  AS DW_INS_UPD_DTS 
-    FROM SF_RKLIVE_06012021.user
+    FROM SF_TESTUSER_31122020.user
            
     

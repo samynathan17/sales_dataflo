@@ -5,17 +5,10 @@
 
 
 
-     
-  select
-        md5(cast(
-    
-    coalesce(cast(DEAL_ID as 
-    varchar
-), '')
 
- as 
-    varchar
-))  AS DEAL_ID,
+      
+       select
+        DEAL_ID,
         DEAL_ID as Source_DEAL_ID,
         PORTAL_ID,
         IS_DELETED,
@@ -64,13 +57,12 @@
         PROPERTY_AMOUNT,
         PROPERTY_POINT_OF_CONTACT,
         PROPERTY_DEALTYPE,   
-        'HS_TESTUSER_09012021' as Source_type,
-        'D_DEAL_STG_LOAD' AS DW_SESSION_NM,
+        Source_type,
+        DW_SESSION_NM,
         
     current_timestamp::
     timestamp_ntz
 
  AS DW_INS_UPD_DTS    
-    FROM HS_TESTUSER_09012021.Deal
-    
+    FROM dual
     

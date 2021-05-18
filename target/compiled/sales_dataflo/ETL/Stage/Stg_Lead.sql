@@ -64,14 +64,14 @@
         JIGSAW_CONTACT_ID,
         EMAIL_BOUNCED_REASON,
         EMAIL_BOUNCED_DATE,
-        'SF_TESTUSER_31122020' as Source_type,
+        'SF_RKLIVE_06012021' as Source_type,
         'D_LEAD_STG_LOAD' AS DW_SESSION_NM,
         
     current_timestamp::
     timestamp_ntz
 
  AS DW_INS_UPD_DTS 
-    FROM SF_TESTUSER_31122020.Lead
+    FROM SF_RKLIVE_06012021.Lead
         
             UNION ALL
           
@@ -136,13 +136,13 @@
         JIGSAW_CONTACT_ID,
         EMAIL_BOUNCED_REASON,
         EMAIL_BOUNCED_DATE,
-        'SF_RKLIVE_06012021' as Source_type,
+        'SF_TESTUSER_31122020' as Source_type,
         'D_LEAD_STG_LOAD' AS DW_SESSION_NM,
         
     current_timestamp::
     timestamp_ntz
 
  AS DW_INS_UPD_DTS 
-    FROM SF_RKLIVE_06012021.Lead
+    FROM SF_TESTUSER_31122020.Lead
           
      

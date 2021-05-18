@@ -49,14 +49,14 @@
         HAS_OPEN_ACTIVITY,
         HAS_OVERDUE_TASK,
         CONTACT_ID,
-        'SF_TESTUSER_31122020' as Source_type,
+        'SF_RKLIVE_06012021' as Source_type,
         'D_OPPORTUNITY_STG_LOAD' AS DW_SESSION_NM,
         
     current_timestamp::
     timestamp_ntz
 
  AS DW_INS_UPD_DTS 
-    FROM SF_TESTUSER_31122020.opportunity
+    FROM SF_RKLIVE_06012021.opportunity
         
             UNION ALL
           
@@ -106,13 +106,13 @@
         HAS_OPEN_ACTIVITY,
         HAS_OVERDUE_TASK,
         CONTACT_ID,
-        'SF_RKLIVE_06012021' as Source_type,
+        'SF_TESTUSER_31122020' as Source_type,
         'D_OPPORTUNITY_STG_LOAD' AS DW_SESSION_NM,
         
     current_timestamp::
     timestamp_ntz
 
  AS DW_INS_UPD_DTS 
-    FROM SF_RKLIVE_06012021.opportunity
+    FROM SF_TESTUSER_31122020.opportunity
           
     

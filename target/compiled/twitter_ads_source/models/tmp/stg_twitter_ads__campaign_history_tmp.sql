@@ -1,0 +1,2 @@
+select *
+from DATAFLOTEST_DATABASE.twitter_ads.campaign_history
