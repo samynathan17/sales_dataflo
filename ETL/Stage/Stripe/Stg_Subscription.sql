@@ -28,7 +28,7 @@
  {% if  entity_typ == 'STR'  %}   
       
   select
-        {{ dbt_utils.surrogate_key('ID') }}  AS INVOICE_LINE_ITEM_ID,
+        {{ dbt_utils.surrogate_key('ID') }}  AS SUBSCRIPTION_ID,
         ID as SOURCE_ID,
         APPLICATION_FEE_PERCENT,
         BILLING,
@@ -63,7 +63,7 @@
         {% endif %}
     {% elif  V_SF_Schema[0:1] == 'X'  %}     
        select
-        null as INVOICE_LINE_ITEM_ID,
+        null as SUBSCRIPTION_ID,
         null as SOURCE_ID,
         null as APPLICATION_FEE_PERCENT,
         null as BILLING,

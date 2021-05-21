@@ -22,7 +22,7 @@
 
  as 
     varchar
-))  AS INVOICE_LINE_ITEM_ID,
+))  AS SUBSCRIPTION_ID,
         ID as SOURCE_ID,
         APPLICATION_FEE_PERCENT,
         BILLING,

@@ -15,7 +15,7 @@
 -- depends_on: {{ ref('Dim_Keyword_Site') }}
 -- depends_on: {{ ref('Dim_Calendar') }}
 
-{% set results = get_column_values_from_query("select * from " ~ var('V_DB') ~ "." ~ var('V_Entity_Schema')~ "." ~ var('V_Mkt')~" where DATASOURCE_TYPE in ('GA_ADS','LI_ADS','GSC')", "ENTITY_DATASORUCE_NAME||'#'||DATASOURCE_TYPE||'#'||HISTORY_LOAD||'#'||TO_VARCHAR(nvl(HISTORY_START_DATE,HISTORY_ACTUAL_START_DATE)::DATE, 'DD/MM/YYYY')||'#'||TO_VARCHAR(HISTORY_END_DATE::DATE, 'DD/MM/YYYY')") %}
+{% set results = get_column_values_from_query("select * from " ~ var('V_DB') ~ "." ~ var('V_Entity_Schema')~ "." ~ var('V_Mkt')~" where DATASOURCE_TYPE in ('GA_ADS','LI_ADS','GSC','GA','FB_ADS')", "ENTITY_DATASORUCE_NAME||'#'||DATASOURCE_TYPE||'#'||HISTORY_LOAD||'#'||TO_VARCHAR(nvl(HISTORY_START_DATE,HISTORY_ACTUAL_START_DATE)::DATE, 'DD/MM/YYYY')||'#'||TO_VARCHAR(HISTORY_END_DATE::DATE, 'DD/MM/YYYY')") %}
 
 {{ config(
     materialized="table"
@@ -44,7 +44,7 @@
                     (run_metrics('upper(CHANNEL_GROUPING)='"'"'ORGANIC'"'"'', '139', '10','Dim_Channel_Traffic','USERS','Sum(SESSIONS)'))                  
                    ]  %}
         (
-             {{ metrics }} as
+             {{ metrics }}
         )
 
             {% if not loop.last -%}
@@ -69,7 +69,7 @@
         {%- endfor -%} 
     {% endif -%}
 
-    {% if entity_type =='FBB_ADS' and hist_load  == 'true' %} 
+    {% if entity_type =='FB_ADS' and hist_load  == 'true' %} 
           {%- for metrics in [(run_ad_metrics('1 = 1', '176', '10','Dim_Facebook','CAMPAIGN_NAME','Sum(impressions)')),   
                     (run_ad_metrics('1 = 1', '178', '10','Dim_Facebook','CAMPAIGN_NAME','Sum(CTR)')),
                     (run_ad_metrics('1 = 1', '180', '10','Dim_Facebook','CAMPAIGN_NAME','Sum(CPC)')),

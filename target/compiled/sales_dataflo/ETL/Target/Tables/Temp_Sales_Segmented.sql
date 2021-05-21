@@ -217,7 +217,7 @@ Metrics AS
     timestamp_ntz
 
  AS DW_INS_UPD_DTS from Metrics_Calc
-      order by Report_Dt, METRIC_ID, TimeFrame_Type 
+      order by Report_Dt, METRIC_ID, TimeFrame_Type as
                     )
 
                     union all
@@ -424,7 +424,7 @@ Metrics AS
     timestamp_ntz
 
  AS DW_INS_UPD_DTS from Metrics_Calc
-      order by Report_Dt, METRIC_ID, TimeFrame_Type 
+      order by Report_Dt, METRIC_ID, TimeFrame_Type as
                     )
 
                     union all
@@ -631,7 +631,7 @@ Metrics AS
     timestamp_ntz
 
  AS DW_INS_UPD_DTS from Metrics_Calc
-      order by Report_Dt, METRIC_ID, TimeFrame_Type 
+      order by Report_Dt, METRIC_ID, TimeFrame_Type as
                     )
 
                     union all
@@ -838,7 +838,7 @@ Metrics AS
     timestamp_ntz
 
  AS DW_INS_UPD_DTS from Metrics_Calc
-      order by Report_Dt, METRIC_ID, TimeFrame_Type 
+      order by Report_Dt, METRIC_ID, TimeFrame_Type as
                     )
 
                     union all
@@ -1045,7 +1045,7 @@ Metrics AS
     timestamp_ntz
 
  AS DW_INS_UPD_DTS from Metrics_Calc
-      order by Report_Dt, METRIC_ID, TimeFrame_Type 
+      order by Report_Dt, METRIC_ID, TimeFrame_Type as
                     )
 
                     union all
@@ -1252,7 +1252,7 @@ Metrics AS
     timestamp_ntz
 
  AS DW_INS_UPD_DTS from Metrics_Calc
-      order by Report_Dt, METRIC_ID, TimeFrame_Type 
+      order by Report_Dt, METRIC_ID, TimeFrame_Type as
                     )
 
                     union all
@@ -1459,7 +1459,7 @@ Metrics AS
     timestamp_ntz
 
  AS DW_INS_UPD_DTS from Metrics_Calc
-      order by Report_Dt, METRIC_ID, TimeFrame_Type 
+      order by Report_Dt, METRIC_ID, TimeFrame_Type as
                     )
 
                     union all
@@ -1666,7 +1666,7 @@ Metrics AS
     timestamp_ntz
 
  AS DW_INS_UPD_DTS from Metrics_Calc
-      order by Report_Dt, METRIC_ID, TimeFrame_Type 
+      order by Report_Dt, METRIC_ID, TimeFrame_Type as
                     )
 
                     union all

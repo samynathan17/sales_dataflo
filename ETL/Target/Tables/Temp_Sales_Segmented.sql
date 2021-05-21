@@ -29,7 +29,7 @@
 					(run_metrics_hist_sales_segment(entity_name,'1 = 1', '32', '2','Dim_Opportunity','OPPORTUNITY_TYPE','INITIAL_CREATE_DT',hist_strt_dt,hist_end_dt)),                                       
                    ]  %}
                     (
-                        {{ metrics }} 
+                        {{ metrics }} as
                     )
 
                     {% if not loop.last -%}

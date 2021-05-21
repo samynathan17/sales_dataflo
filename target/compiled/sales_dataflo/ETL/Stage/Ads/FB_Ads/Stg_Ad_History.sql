@@ -5,35 +5,46 @@
 
 
 
-
+ 
 
 
 
   
-         select
-    NULL AS CONFIGURED_STATUS,
-NULL AS BID_INFO_ACTIONS,
-NULL AS ACCOUNT_ID,
-NULL AS STATUS,
-NULL AS LAST_UPDATED_BY_APP_ID,
-NULL AS CREATED_TIME,
-NULL AS EFFECTIVE_STATUS,
-NULL AS CREATIVE_ID,
-NULL AS NAME,
-NULL AS UPDATED_TIME,
-NULL AS AD_SET_ID,
-NULL AS BID_AMOUNT,
-NULL AS AD_SOURCE_ID,
-NULL AS BID_TYPE,
-NULL AS ID,
-NULL AS CAMPAIGN_ID,
-        '' as Source_type,
+      
+  select
+        md5(cast(
+    
+    coalesce(cast(ID as 
+    varchar
+), '')
+
+ as 
+    varchar
+))  AS AD_ID,
+       CONFIGURED_STATUS,
+BID_INFO_ACTIONS,
+ACCOUNT_ID,
+STATUS,
+LAST_UPDATED_BY_APP_ID,
+CREATED_TIME,
+EFFECTIVE_STATUS,
+CREATIVE_ID,
+NAME,
+UPDATED_TIME,
+AD_SET_ID,
+BID_AMOUNT,
+AD_SOURCE_ID,
+BID_TYPE,
+ID,
+CAMPAIGN_ID,
+_FIVETRAN_SYNCED,
+        'FB_ADS_DRGRILL_30032021' as Source_type,
         'D_BASIC_AD_ACTIONS_STG_LOAD' AS DW_SESSION_NM,
         
     current_timestamp::
     timestamp_ntz
 
  AS DW_INS_UPD_DTS 
-    FROM dual     
-
-    
+    FROM FB_ADS_DRGRILL_30032021.AD_HISTORY
+           
+        

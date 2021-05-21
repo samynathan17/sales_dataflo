@@ -27,7 +27,7 @@
 							{%- for metrics in [(fact_table_pit_hist(entity_name,metricid,hist_strt_dt,hist_end_dt))                
 								  ]  %}
 								  (
-								  {{ metrics }} as
+								  {{ metrics }}
 								  )
 							  
 								{% if not loop.last -%}

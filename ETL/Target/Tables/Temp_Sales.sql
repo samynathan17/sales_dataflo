@@ -29,7 +29,7 @@
                                 (run_metrics_hist_sales(entity_name,'1 = 1', '29', '6','Dim_Contact','initial_create_dt',hist_strt_dt,hist_end_dt)),                    
                             ]  %}
                     (
-                        {{ metrics }} 
+                        {{ metrics }} as
                     )
 
                     {% if not loop.last -%}

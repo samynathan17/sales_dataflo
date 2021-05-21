@@ -23,7 +23,7 @@
  as 
     varchar
 ))  AS CHARGE_ID,
-        ID as SOURCE_ID,
+        ID as SOURCE_CHARGE_ID,
         CONNECTED_ACCOUNT_ID,
         AMOUNT,
         AMOUNT_REFUNDED,

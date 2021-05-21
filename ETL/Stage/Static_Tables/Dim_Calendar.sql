@@ -46,9 +46,13 @@ select
             end as {{ dbt_utils.type_int() }}
             ) as day_of_week,
         case
-            when {{ dbt_date.date_part('dayofweek',  'd.date_day') }} = 0 then 'Y'
-            else 'N'
-        end as weekend_flag,   
+            when {{ dbt_date.date_part('dayofweek',  'd.date_day') }} = 0 then 'N'
+            else 'Y'
+        end as weekday_flag,   
+         case when Calendar_ID = week_end_date then 'TRUE' else 'FALSE' end as Weekend_FLag,
+         case when Calendar_ID = cldr_mnth_end_dt then 'TRUE' else 'FALSE' end as  Monthend_FLag,
+        case when Calendar_ID = cldr_qtr_end_dt then 'TRUE' else 'FALSE' end as  Quarterend_FLag,
+        case when Calendar_ID = cldr_year_end_dt then 'TRUE' else 'FALSE' end as  Yearend_FLag,
       {{ dbt_utils.current_timestamp() }} as DW_INS_UPD_DTS,
       'D_CALENDAR_DIM_LOAD' as DW_SESSION_NM
 from

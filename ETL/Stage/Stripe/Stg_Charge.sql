@@ -29,7 +29,7 @@
       
   select
         {{ dbt_utils.surrogate_key('ID') }}  AS CHARGE_ID,
-        ID as SOURCE_ID,
+        ID as SOURCE_CHARGE_ID,
         CONNECTED_ACCOUNT_ID,
         AMOUNT,
         AMOUNT_REFUNDED,
@@ -94,7 +94,7 @@
     {% elif  V_SF_Schema[0:1] == 'X'  %}     
        select
         null as CHARGE_ID,
-        null as SOURCE_ID,
+        null as SOURCE_CHARGE_ID,
         null as CONNECTED_ACCOUNT_ID,
         null as AMOUNT,
         null as AMOUNT_REFUNDED,
