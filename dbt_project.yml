@@ -32,11 +32,8 @@ clean-targets:         # directories to be removed by `dbt clean`
 # using the `{{ config(...) }}` macro.
 models:
   sales_dataflo :
-    Stage:
-          materialized: table
-          
-    Tables:
-          materialized: table      
+    ETL:
+          materialized: table     
           
 # views settings
     Views:
@@ -60,8 +57,7 @@ vars:
   V_Schema                 : DBT_SALESDATAFLO
   V_SF_CRM_ETL             : FIVETRAN_SF 
   V_DB                     : DATAFLOTEST_DATABASE
-  V_Sales                  : ENTITY_DATASOURCES
-  V_Mkt                    : ENTITY_DATASOURCES
+  V_Entity_Table              : ENTITY_DATASOURCES
 
 
   linkedin__use_local_currency: true

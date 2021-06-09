@@ -5,28 +5,38 @@
 
 
 
-
+ 
 
 
 
   
-         select
-        NULL AS _7_D_CLICK,
-NULL AS _1_D_VIEW,
-NULL AS CAMPAIGN_ID,
-NULL AS ACTION_TYPE,
-NULL AS INDEX,
-NULL AS VALUE,
-NULL AS DATE,
-NULL AS _FIVETRAN_ID,
+      
+  select
+        md5(cast(
+    
+    coalesce(cast(_FIVETRAN_ID as 
+    varchar
+), '')
 
-        '' as Source_type,
+ as 
+    varchar
+))  AS ID,
+        _7_D_CLICK,
+_1_D_VIEW,
+CAMPAIGN_ID,
+ACTION_TYPE,
+INDEX,
+VALUE,
+DATE,
+_FIVETRAN_ID,
+
+        'FB_ADS_DRGRILL_30032021' as Source_type,
         'D_BASIC_AD_ACTIONS_STG_LOAD' AS DW_SESSION_NM,
         
     current_timestamp::
     timestamp_ntz
 
  AS DW_INS_UPD_DTS 
-    FROM dual     
-
-    
+    FROM FB_ADS_DRGRILL_30032021.BASIC_CAMPAIGN_ACTIONS
+           
+        

@@ -60,6 +60,9 @@ with rawdata as (
      + 
     
     p8.generated_number * pow(2, 8)
+     + 
+    
+    p9.generated_number * pow(2, 9)
     
     
     + 1
@@ -93,6 +96,9 @@ with rawdata as (
      cross join 
     
     p as p8
+     cross join 
+    
+    p as p9
     
     
 
@@ -100,7 +106,7 @@ with rawdata as (
 
     select *
     from unioned
-    where generated_number <= 508
+    where generated_number <= 514
     order by generated_number
 
 

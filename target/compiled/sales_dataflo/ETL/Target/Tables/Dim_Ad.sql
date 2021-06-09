@@ -6,36 +6,36 @@ with report as (
 ), creatives as (
 
     select *
-    from DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Creative_History_FB
+    from DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Creative_History_FB
 
 ), accounts as (
 
     select *
-    from DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Account_History_FB
-    --where is_most_recent_record = true
+    from DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Account_History_FB
+    where is_most_recent_record = true
 
 ), ads as (
 
     select *
-    from DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Ad_History
-   -- where is_most_recent_record = true
+    from DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Ad_History
+    where is_most_recent_record = true
 
 ), ad_sets as (
 
     select *
-    from DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Ad_Set_History
-   -- where is_most_recent_record = true
+    from DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Ad_Set_History
+    where is_most_recent_record = true
 
 ), campaigns as (
 
     select *
-    from DATAFLOTEST_DATABASE.dbt_salesdataflo.Stg_Campaign_History_FB
-   -- where is_most_recent_record = true
+    from DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Campaign_History_FB
+    where is_most_recent_record = true
 
 ), joined as (
 
     select
-        report.day as date_day,
+        report.DATE as date_day,
         report.Source_type,
         accounts.account_id,
         accounts.account_name,
@@ -47,9 +47,14 @@ with report as (
         ads.ad_name,
         creatives.creative_id,
         creatives.creative_name,
-        sum(report.clicks) as clicks,
+        sum(report.INLINE_LINK_CLICKS) as clicks,
         sum(report.impressions) as impressions,
-        sum(report.spend) as spend
+        sum(report.spend) as spend,
+        sum(report.REACH) as REACH,
+        sum(report.CPC) as CPC,
+        sum(report.CPM) as CPM,
+        sum(report.CTR) as CTR,
+        sum(report.FREQUENCY) as FREQUENCY
     from report
     left join ads 
         on cast(report.ad_id as 
@@ -81,7 +86,7 @@ with report as (
 ) = cast(accounts.account_id as 
     bigint
 )
-    group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+    group by 1,2,3,4,5,6,7,8,9,10,11,12
 )
 
 select *

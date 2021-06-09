@@ -2140,7 +2140,7 @@ Metrics_Calc AS(
  
 SELECT Report_Date, entity_id, employee_id, METRIC_ID, METRIC_CATEGORY_ID,Segment_Name, TimeFrame_Type, AMOUNT, Count, 
         nvl(AMOUNT/decode(count,0,1,count),0) as Average, 'USD'  as Reporting_Currency,  DW_SESSION_NM, DW_INS_UPD_DTS from Metrics_Calc
-order by Report_Date, METRIC_ID, TimeFrame_Type 
+order by Report_Date, METRIC_ID, TimeFrame_Type as
 								  )
 							  
 								union all
@@ -5568,7 +5568,7 @@ Metrics_Calc AS(
  
 SELECT Report_Date, entity_id, employee_id, METRIC_ID, METRIC_CATEGORY_ID,Segment_Name, TimeFrame_Type, AMOUNT, Count, 
         nvl(AMOUNT/decode(count,0,1,count),0) as Average, 'USD'  as Reporting_Currency,  DW_SESSION_NM, DW_INS_UPD_DTS from Metrics_Calc
-order by Report_Date, METRIC_ID, TimeFrame_Type 
+order by Report_Date, METRIC_ID, TimeFrame_Type as
 								  )
 							  
 								union all

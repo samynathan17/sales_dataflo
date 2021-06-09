@@ -9,9 +9,9 @@ fields_xf as (
     
     select 
         _fivetran_id,
-        id as creative_id,
+        creative_id,
         account_id,
-        name as creative_name,
+        creative_name,
         page_link,
         template_page_link,
         url_tags,
@@ -25,7 +25,7 @@ fields_xf as (
         template_app_link_spec_ipad,
         template_app_link_spec_android,
         template_app_link_spec_iphone,
-        row_number() over (partition by id order by _fivetran_synced desc) = 1 as is_most_recent_record
+        row_number() over (partition by creative_id order by _fivetran_synced desc) = 1 as is_most_recent_record
     from base
     
 )

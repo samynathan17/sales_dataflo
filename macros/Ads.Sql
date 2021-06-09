@@ -28,7 +28,7 @@ With Source AS
     {{ dbt_utils.date_spine(
         datepart="day",
         start_date="to_date('01/01/2017', 'dd/mm/yyyy')",
-        end_date="to_date('31/03/2021', 'dd/mm/yyyy')",
+        end_date="to_date('31/05/2021', 'dd/mm/yyyy')",
        )
     }}
 ) ,
@@ -152,7 +152,7 @@ timeframe as (
         METRIC_CATEGORY_ID,
 		Segment_name            
     )
- SELECT Report_Date, entity_code, METRIC_ID,METRIC_CATEGORY_ID, Segment_name,Value,'D_ADS_FACT_LOAD' AS DW_SESSION_NM,
+ SELECT Report_Date, entity_code, METRIC_ID,METRIC_CATEGORY_ID, TimeFrame_Type,Segment_name,Value,'D_ADS_FACT_LOAD' AS DW_SESSION_NM,
         {{ dbt_utils.current_timestamp() }} AS DW_INS_UPD_DTS from Metrics_Calc
       order by Report_Date, METRIC_ID
 {%- endmacro %}
@@ -177,8 +177,8 @@ With Source AS
 
     {{ dbt_utils.date_spine(
         datepart="day",
-        start_date="to_date('01/03/2021', 'dd/mm/yyyy')",
-        end_date="to_date('31/03/2021', 'dd/mm/yyyy')",
+        start_date="to_date('01/01/2017', 'dd/mm/yyyy')",
+        end_date="to_date('31/05/2021', 'dd/mm/yyyy')",
        )
     }}
 ) ,

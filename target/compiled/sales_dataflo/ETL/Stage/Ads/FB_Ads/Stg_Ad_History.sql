@@ -20,7 +20,7 @@
 
  as 
     varchar
-))  AS AD_ID,
+))  AS AD_HIS_ID,
        CONFIGURED_STATUS,
 BID_INFO_ACTIONS,
 ACCOUNT_ID,

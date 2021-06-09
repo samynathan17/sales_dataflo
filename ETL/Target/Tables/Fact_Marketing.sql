@@ -4,12 +4,11 @@
 -- depends_on: {{ ref('Dim_Page_Tracking') }}
 -- depends_on: {{ ref('Dim_Goal_Conversions') }}
 -- depends_on: {{ ref('Dim_Events_Overview') }}
--- depends_on: {{ ref('Dim_LinkedIn') }}
--- depends_on: {{ ref('Dim_GA_Ads') }}
 -- depends_on: {{ ref('Dim_Site') }}
 -- depends_on: {{ ref('Dim_Calendar') }}
 
-{% set results = get_column_values_from_query("select * from " ~ var('V_DB') ~ "." ~ var('V_Entity_Schema')~ "." ~ var('V_Mkt')~" where DATASOURCE_TYPE in ('GA_ADS','LI_ADS','GSC','GA')", "ENTITY_DATASORUCE_NAME||'#'||DATASOURCE_TYPE||'#'||HISTORY_LOAD||'#'||TO_VARCHAR(nvl(HISTORY_START_DATE,HISTORY_ACTUAL_START_DATE)::DATE, 'DD/MM/YYYY')||'#'||TO_VARCHAR(HISTORY_END_DATE::DATE, 'DD/MM/YYYY')") %}
+
+{% set results = get_column_values_from_query("select * from " ~ var('V_DB') ~ "." ~ var('V_Entity_Schema')~ "." ~ var('V_Mkt')~" where DATASOURCE_TYPE in ('GA','GSC')", "ENTITY_DATASORUCE_NAME||'#'||DATASOURCE_TYPE||'#'||HISTORY_LOAD||'#'||TO_VARCHAR(nvl(HISTORY_START_DATE,HISTORY_ACTUAL_START_DATE)::DATE, 'DD/MM/YYYY')||'#'||TO_VARCHAR(HISTORY_END_DATE::DATE, 'DD/MM/YYYY')") %}
 
 {{ config(
     materialized="table"
@@ -42,59 +41,7 @@
             {% if not loop.last -%}
                 union all
             {% endif -%}
-        {%- endfor -%}   
-    
-    {% elif entity_type =='LI_ADS' and hist_load  == 'true' %} 
-         {%- for metrics in [(run_ads_ns_metrics('1 = 1', '172', '10','Dim_LinkedIn','Sum(spend)')) ,  
-                    (run_ads_ns_metrics('1 = 1', '173', '10','Dim_LinkedIn','Sum(clicks)')) , 
-                    (run_ads_ns_metrics('1 = 1', '175', '10','Dim_LinkedIn','Sum(impressions)')),   
-                    (run_ads_ns_metrics('1 = 1', '177', '10','Dim_LinkedIn','Sum(clicks)/ Sum(impressions)')),
-                    (run_ads_ns_metrics('1 = 1', '179', '10','Dim_LinkedIn','Sum(spend)/ Sum(clicks)')),
-                   ]  %}
-        (
-             {{ metrics }}
-        )
-
-            {% if not loop.last -%}
-                union all
-            {% endif -%}
-        {%- endfor -%} 
-   
-
-    {% elif entity_type =='FBB_ADS' and hist_load  == 'true' %} 
-          {%- for metrics in [(run_ads_ns_metrics('1 = 1', '172', '10','Dim_Facebook','Sum(spend)')) ,  
-                    (run_ads_ns_metrics('1 = 1', '173', '10','Dim_Facebook','Sum(clicks)')) , 
-                    (run_ads_ns_metrics('1 = 1', '175', '10','Dim_Facebook','Sum(impressions)')),   
-                    (run_ads_ns_metrics('1 = 1', '177', '10','Dim_Facebook','Sum(CTR)')),
-                    (run_ads_ns_metrics('1 = 1', '179', '10','Dim_Facebook','Sum(CPC)')),
-                    (run_ads_ns_metrics('1 = 1', '188', '10','Dim_Facebook','Sum(CPM)')),
-                    (run_ads_ns_metrics('1 = 1', '189', '10','Dim_Facebook','Sum(REACH)')),
-                    (run_ads_ns_metrics('1 = 1', '190 ', '10','Dim_Facebook','Sum(FREQUENCY)')),
-                   ]  %}
-        (
-             {{ metrics }}
-        )
-
-            {% if not loop.last -%}
-                union all
-            {% endif -%}
-        {%- endfor -%} 
-        
-    {% elif entity_type =='GA_ADS' and hist_load  == 'true' %} 
-         {%- for metrics in [(run_ads_ns_metrics('1 = 1', '172', '10','Dim_GA_Ads','Sum(spend)')) ,  
-                    (run_ads_ns_metrics('1 = 1', '173', '10','Dim_GA_Ads','Sum(clicks)')) , 
-                    (run_ads_ns_metrics('1 = 1', '175', '10','Dim_GA_Ads','Sum(impressions)')),   
-                    (run_ads_ns_metrics('1 = 1', '177', '10','Dim_GA_Ads','Sum(clicks)/ Sum(impressions)')),
-                    (run_ads_ns_metrics('1 = 1', '179', '10','Dim_GA_Ads','Sum(spend)/ Sum(clicks)')),
-                   ]  %}
-        (
-             {{ metrics }}
-        )
-
-            {% if not loop.last -%}
-                union all
-            {% endif -%}
-        {%- endfor -%} 
+        {%- endfor -%}       
 
     {% elif entity_type =='GSC' and hist_load  == 'true' %} 
          {%- for metrics in [(run_ads_ns_metrics('1 = 1', '195', '10','Dim_Site','Sum(clicks)')) , 

@@ -15,7 +15,7 @@
 {{
     config(
         materialized='incremental',
-        unique_key= 'Report_Date1'
+        unique_key= 'Report_Date'
       )
 	  
 }}
@@ -29,7 +29,7 @@
 							{%- for metrics in [(fact_table_pit_segmented_hist(entity_name,metricid,hist_strt_dt,hist_end_dt))                
 								  ]  %}
 								  (
-								  {{ metrics }} 
+								  {{ metrics }} as
 								  )
 							  
 								{% if not loop.last -%}

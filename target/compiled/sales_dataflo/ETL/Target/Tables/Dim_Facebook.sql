@@ -3,7 +3,7 @@
 with base as (
 
     select *
-    from DATAFLOTEST_DATABASE.dbt_salesdataflo.facebook_ads__ad_adapter
+    from DATAFLOTEST_DATABASE.dbt_salesdataflo.Dim_Ad
 
 ),fields as (
 
@@ -17,7 +17,6 @@ with base as (
     varchar
 ) as ad_group_id,
         ad_set_name as ad_group_name,
-        'FB_ADS_DRGRILL_30032021' as platform,
         coalesce(clicks, 0) as clicks,
         coalesce(impressions, 0) as impressions,
         coalesce(spend, 0) as spend,
@@ -25,7 +24,8 @@ with base as (
         coalesce(CPC, 0) as CPC,
         coalesce(CPM, 0) as CPM,
         coalesce(CTR, 0) as CTR,
-        coalesce(FREQUENCY, 0) as FREQUENCY
+        coalesce(FREQUENCY, 0) as FREQUENCY,
+        Source_type as platform
     from base
     
 )

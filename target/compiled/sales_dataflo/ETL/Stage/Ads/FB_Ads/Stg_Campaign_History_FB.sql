@@ -5,39 +5,49 @@
 
 
 
-
+ 
 
 
 
   
-         select
-        Null as ID,
-        Null as START_TIME,
-        Null as CAMPAIGN_ID,
-        Null as BUDGET_REBALANCE_FLAG,
-        Null as SOURCE_CAMPAIGN_ID,
-        Null as CONFIGURED_STATUS,
-        Null as OBJECTIVE,
-        Null as STATUS,
-        Null as DAILY_BUDGET,
-        Null as BUYING_TYPE,
-        Null as NAME,
-        Null as CAN_USE_SPEND_CAP,
-        Null as EFFECTIVE_STATUS,
-        Null as BOOSTED_OBJECT_ID,
-        Null as ACCOUNT_ID,
-        Null as CREATED_TIME,
-        Null as STOP_TIME,
-        Null as CAN_CREATE_BRAND_LIFT_STUDY,
-        Null as SPEND_CAP,
-        Null as UPDATED_TIME,
-        '' as Source_type,
+      
+  select
+        md5(cast(
+    
+    coalesce(cast(ID as 
+    varchar
+), '')
+
+ as 
+    varchar
+))  AS CAMP_ID,
+        START_TIME,
+        ID as CAMPAIGN_ID,
+        BUDGET_REBALANCE_FLAG,
+        SOURCE_CAMPAIGN_ID,
+        CONFIGURED_STATUS,
+        OBJECTIVE,
+        STATUS,
+        DAILY_BUDGET,
+        BUYING_TYPE,
+        NAME,
+        CAN_USE_SPEND_CAP,
+        EFFECTIVE_STATUS,
+        BOOSTED_OBJECT_ID,
+        ACCOUNT_ID,
+        CREATED_TIME,
+        STOP_TIME,
+        CAN_CREATE_BRAND_LIFT_STUDY,
+        SPEND_CAP,
+        UPDATED_TIME,
+        _FIVETRAN_SYNCED,
+        'FB_ADS_DRGRILL_30032021' as Source_type,
         'D_BASIC_AD_ACTIONS_STG_LOAD' AS DW_SESSION_NM,
         
     current_timestamp::
     timestamp_ntz
 
  AS DW_INS_UPD_DTS 
-    FROM dual     
-
-    
+    FROM FB_ADS_DRGRILL_30032021.CAMPAIGN_HISTORY
+           
+        
